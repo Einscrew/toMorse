@@ -1,3 +1,13 @@
-#toMorse
+# toMorse
 
-C program to convert text in morse and vice-versa.
+C program to convert ascii text in morse and vice-versa.
+
+## usage
+
+compile:
+
+`make`
+
+run:
+
+`./morse`

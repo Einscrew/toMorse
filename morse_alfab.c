@@ -14,7 +14,7 @@ typedef struct {
 	char morse[MORSE_MAX];
 }Data;
 
-Data* data_base(int n_elem)
+Data * data_base(int * n_elem)
 {
 	int i = 0;
 	FILE *fp;
@@ -22,15 +22,13 @@ Data* data_base(int n_elem)
 	char line[MAX];
 
 	fp = fopen("morse.txt", "r");
-	fscanf(fp, "%d\n", &n_elem);
-	Data* data = (Data*)malloc(sizeof(Data)*n_elem);
-
-	for(i = 0; i < n_elem; i++)
+	fscanf(fp, "%d\n", n_elem);
+	Data* data = (Data*)malloc(sizeof(Data)*(*n_elem));
+	for(i = 0; i < *n_elem; i++)
 	{
 		fgets(line, MAX, fp);
 		sscanf(line,"%c %s x", &data[i].letra, morse);
 		strcpy(data[i].morse, morse);
-		
 	}
 
 	fclose(fp);
@@ -84,8 +82,6 @@ void wording(char * input, Data* data, int n_elem)
 		}
 		word[i-j] = '\0';
 
-		
-
 		for(j = 0; j < 36; j++)
 		{
 			if(strcmp(word, data[j].morse) == 0)
@@ -105,9 +101,10 @@ void wording(char * input, Data* data, int n_elem)
 
 int main() {
 	char* input = (char*)malloc(sizeof(char)*MAX);
-	int* n_elem = NULL;
-	Data * data = data_base(*n_elem);
+	int n_elem = 0;
 
+	Data * data = NULL;
+	data = data_base(&n_elem);
 
 	printf("Prima para:\n\tConverter para morse - 0\n\tConverter para alfabeto - 1\n\t[0,1] - ");
 	do
@@ -126,12 +123,11 @@ int main() {
 		case '1':
 			printf("Intruduza o codigo a converter: ");
 			fgets(input, MAX, stdin);
-			wording(input, data, *n_elem);
+			wording(input, data, n_elem);
 			break;
 	}
 	free(input);
 	free(data);
 
-	free(n_elem);
 	return 0;
 }

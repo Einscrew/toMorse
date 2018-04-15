@@ -1,5 +1,5 @@
-runable: morse_alfab.c
-	gcc -o runable morse_alfab.c -g -Wall
+morse: morse_alfab.c
+	gcc -o $@ $^ -g -Wall
 
 clean:
-	rm -f runable
+	rm -f morse
